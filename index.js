@@ -264,6 +264,14 @@ if (reversed == null) { reversed = false; }
 	props.reversed = reversed;
 	cjs.MovieClip.apply(this,[props]);
 
+	// timeline functions:
+	this.frame_0 = function() {
+		this.stop();
+	}
+
+	// actions tween:
+	this.timeline.addTween(cjs.Tween.get(this).call(this.frame_0).wait(5));
+
 	// Layer_2
 	this.text = new cjs.Text("select", "bold 23px 'NanumGothicExtraBold'", "#A5D2D9");
 	this.text.name = "text";
@@ -273,13 +281,13 @@ if (reversed == null) { reversed = false; }
 	this.text.parent = this;
 	this.text.setTransform(-0.05,-13.25);
 
-	this.timeline.addTween(cjs.Tween.get(this.text).wait(3));
+	this.timeline.addTween(cjs.Tween.get(this.text).wait(5));
 
 	// Layer_1
 	this.instance = new lib.img_btn();
 	this.instance.cache(-120,-22,240,45);
 
-	this.timeline.addTween(cjs.Tween.get(this.instance).wait(2).to({scaleX:0.9,scaleY:0.9},0).wait(1));
+	this.timeline.addTween(cjs.Tween.get(this.instance).wait(1).to({scaleX:0.9,scaleY:0.9},0).wait(4));
 
 	this._renderFirstFrame();
 
@@ -348,7 +356,6 @@ if (reversed == null) { reversed = false; }
 	this.btn_select_3 = new lib.btn_test_select();
 	this.btn_select_3.name = "btn_select_3";
 	this.btn_select_3.setTransform(0.95,194.7);
-	new cjs.ButtonHelper(this.btn_select_3, 0, 1, 2);
 
 	this.num_animation = new lib.num_animation();
 	this.num_animation.name = "num_animation";
@@ -357,12 +364,10 @@ if (reversed == null) { reversed = false; }
 	this.btn_select_2 = new lib.btn_test_select();
 	this.btn_select_2.name = "btn_select_2";
 	this.btn_select_2.setTransform(0.95,143.7);
-	new cjs.ButtonHelper(this.btn_select_2, 0, 1, 2);
 
 	this.btn_select_1 = new lib.btn_test_select();
 	this.btn_select_1.name = "btn_select_1";
 	this.btn_select_1.setTransform(0.95,92.7);
-	new cjs.ButtonHelper(this.btn_select_1, 0, 1, 2);
 
 	this.msg = new cjs.Text("Message", "bold 40px 'NanumGothicExtraBold'", "#6FA0A8");
 	this.msg.name = "msg";
@@ -414,25 +419,28 @@ if (reversed == null) { reversed = false; }
 		this.scene_main.btn_select_2.addEventListener("mousedown",selectBtn.bind(this));
 		this.scene_main.btn_select_3.addEventListener("mousedown",selectBtn.bind(this));
 		
-		
 		var value  = 0;
 		
 		this.scene_main.msg.text = value;
 		
+		
 		function selectBtn(e)
 		{	
+		
+			e.currentTarget.gotoAndPlay(1);
 			this.scene_main.num_animation.gotoAndPlay("action");
-			if(e.target.name == "btn_select_1")
+		
+			if(e.currentTarget.name == "btn_select_1")
 			{
 				value++;
 				//this.scene_main.msg.text = "1";
 			}
-			else if(e.target.name == "btn_select_2")
+			else if(e.currentTarget.name == "btn_select_2")
 			{		
 				value--;
 				//this.scene_main.msg.text = "2";
 			}
-			else if(e.target.name == "btn_select_3")
+			else if(e.currentTarget.name == "btn_select_3")
 			{		
 				value--;
 				value--;
@@ -450,6 +458,7 @@ if (reversed == null) { reversed = false; }
 				value = 0;
 				this.scene_main.msg.text = value;
 				this.scene_main.num_animation.gotoAndPlay("idle");
+				e.currentTarget.gotoAndStop(0);
 				
 			}
 			else if(value >= 5)
@@ -460,9 +469,12 @@ if (reversed == null) { reversed = false; }
 				value = 0;
 				this.scene_main.msg.text = value;
 				this.scene_main.num_animation.gotoAndPlay("idle");
+				e.currentTarget.gotoAndStop(0);
 				
 			}
 		}
+		
+		
 		
 		
 		
